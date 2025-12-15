@@ -1,4 +1,4 @@
----
+
 
 # 🚀📊 Social Media Monitoring System
 
@@ -7,7 +7,6 @@
 🎓 **Final Project — Big Data Introduction Course**
 🛠️ **Option A: Technical Project**
 
----
 
 ## 🌟 Project Overview
 
