@@ -6,7 +6,7 @@
 🛠️ Option A: Technical Project
 
 
-###🌟 PROJECT OVERVIEW
+#🌟 PROJECT OVERVIEW
 
 
 This project showcases a **real-time Big Data pipeline** designed to monitor brand reputation on social media platforms.
