@@ -1,7 +1,6 @@
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🚀📊 SOCIAL MEDIA MONITORING SYSTEM
-🔥 Real-Time Big Data Pipeline for Brand Reputation Analysis
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# 🚀📊 Social Media Monitoring System
+### 🔥 Real-Time Big Data Pipeline for Brand Reputation Analysis
+
 
 🎓 Final Project — Big Data Introduction Course
 🛠️ Option A: Technical Project
