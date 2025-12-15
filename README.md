@@ -5,9 +5,9 @@
 🎓 Final Project — Big Data Introduction Course
 🛠️ Option A: Technical Project
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🌟 PROJECT OVERVIEW
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+###🌟 PROJECT OVERVIEW
+
 
 This project showcases a **real-time Big Data pipeline** designed to monitor brand reputation on social media platforms.
 
@@ -19,9 +19,9 @@ Through this project, we demonstrate:
 ✔️ Integration of multiple components into a unified architecture
 ✔️ Practical problem-solving in a distributed environment
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🏢 BUSINESS USE CASE
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+###🏢 BUSINESS USE CASE
+
 
 Company: TechnoGadget Inc.
 Product: #TechnoPhone
@@ -34,9 +34,9 @@ Key objectives:
  Identify trending hashtags and discussion topics
  Support customer service teams with actionable insights
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🚫 TWITTER API LIMITATION & DESIGN CHOICE
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+###🚫 TWITTER API LIMITATION & DESIGN CHOICE
+
 
 The official Twitter (X) API is no longer freely accessible and requires expensive paid plans.
 
@@ -51,9 +51,9 @@ The Tweet Simulator:
 
 This approach allows us to demonstrate **real Big Data concepts** without relying on external services.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🏗️ SYSTEM ARCHITECTURE
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+###🏗️ SYSTEM ARCHITECTURE
+
 
 Tweet Simulator
 ➡️ Kafka (real-time stream buffering)
@@ -66,9 +66,9 @@ Data flow explained:
 3️⃣ ElasticSearch indexes and stores tweets instantly
 4️⃣ Kibana visualizes trends, sentiment, and volume in real time
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🧰 TECHNOLOGY STACK
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+###🧰 TECHNOLOGY STACK
+
 
  Message Broker: Apache Kafka 7.5.0
  Coordination Service: Zookeeper 7.5.0
@@ -81,9 +81,9 @@ Data flow explained:
 
 Note: Apache Spark is included for experimentation only and is not required for the core pipeline.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-⚙️ INSTALLATION & EXECUTION
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+###⚙️ INSTALLATION & EXECUTION
+
 
 Prerequisites:
  Docker Desktop
@@ -103,9 +103,9 @@ start_pipeline.bat
  Kibana Dashboard:
 [http://localhost:5601](http://localhost:5601)
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🧪 MINIMAL WORKING EXAMPLE
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+###🧪 MINIMAL WORKING EXAMPLE
+
 
 The minimal working example demonstrates a full Big Data pipeline:
  Tweet generation
@@ -121,9 +121,9 @@ hashtags: technophone
 author_username: tech_lover_92
 created_at: 2024-12-15T15:00:00Z
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🌍 BIG DATA ECOSYSTEM INTEGRATION
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+###🌍 BIG DATA ECOSYSTEM INTEGRATION
+
 
 This project reflects a standard Big Data architecture:
 🔹 Ingestion layer: Kafka decouples producers and consumers
@@ -133,9 +133,9 @@ This project reflects a standard Big Data architecture:
 
 The architecture can easily be extended with Spark or Hadoop for larger-scale processing.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🧠 MY SETUP NOTES — LEARNING EXPERIENCE
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+###🧠 MY SETUP NOTES — LEARNING EXPERIENCE
+
 
 Main challenge: managing service startup dependencies in Docker.
 
@@ -155,9 +155,9 @@ ElasticSearch requires significantly more startup time than Kafka or Zookeeper.
 • Orchestration is critical in distributed systems
 • Reliable startup scripts are essential in real-world pipelines
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📁 PROJECT STRUCTURE
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+###📁 PROJECT STRUCTURE
+
 
 BigDataProject
 
@@ -174,9 +174,9 @@ BigDataProject
 * screens
 * scripts
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🖼️ EXECUTION PROOF
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+###🖼️ EXECUTION PROOF
+
 
 The screens directory contains screenshots showing:
  Running Docker containers
@@ -186,29 +186,29 @@ The screens directory contains screenshots showing:
 
 These screenshots prove the correct execution of the pipeline.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🏁 CONCLUSION
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+###🏁 CONCLUSION
+
 
 This project demonstrates a **complete, functional, and realistic Big Data pipeline**, from data ingestion to real-time visualization.
 It highlights both technical implementation and the practical challenges of working with distributed systems.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-👥 AUTHORS
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+###👥 AUTHORS
+
 
 Big Data Introduction Course — Final Project
 Group of 2 students
 Rihana Nicolas
 Goudedranche Antoine
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🙏 ACKNOWLEDGMENTS
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+###🙏 ACKNOWLEDGMENTS
+
 
 Apache Kafka
 Elastic Stack
 TextBlob
 Docker
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
