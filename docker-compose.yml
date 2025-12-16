@@ -1,0 +1,151 @@
+services:
+  # ============================================
+  # ZOOKEEPER - Required for Kafka coordination
+  # ============================================
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.5.0
+    container_name: zookeeper
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    ports:
+      - "2181:2181"
+    networks:
+      - bigdata-net
+    volumes:
+      - zookeeper-data:/var/lib/zookeeper/data
+      - zookeeper-logs:/var/lib/zookeeper/log
+
+  # ============================================
+  # KAFKA - Message broker for tweet ingestion
+  # ============================================
+  kafka:
+    image: confluentinc/cp-kafka:7.5.0
+    container_name: kafka
+    depends_on:
+      - zookeeper
+    ports:
+      - "9092:9092"
+      - "29092:29092"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+      KAFKA_LOG_RETENTION_HOURS: 168 # 7 days
+    networks:
+      - bigdata-net
+    volumes:
+      - kafka-data:/var/lib/kafka/data
+
+  # ============================================
+  # SPARK MASTER - Processing coordinator
+  # ============================================
+  spark-master:
+    image: apache/spark:3.5.0
+    container_name: spark-master
+    command: bash -c "/opt/spark/sbin/start-master.sh && tail -f /opt/spark/logs/*"
+    environment:
+      - SPARK_MODE=master
+      - SPARK_MASTER_HOST=spark-master
+      - SPARK_NO_DAEMONIZE=true
+    ports:
+      - "8080:8080" # Spark Master UI
+      - "7077:7077" # Spark Master port
+    networks:
+      - bigdata-net
+    volumes:
+      - ./src:/opt/spark-apps
+      - ./data:/opt/spark-data
+    tty: true
+    stdin_open: true
+
+  # ============================================
+  # SPARK WORKER - Processing executor
+  # ============================================
+  spark-worker:
+    image: apache/spark:3.5.0
+    container_name: spark-worker
+    command: bash -c "sleep 10 && /opt/spark/sbin/start-worker.sh spark://spark-master:7077 && tail -f /opt/spark/logs/*"
+    depends_on:
+      - spark-master
+    environment:
+      - SPARK_MODE=worker
+      - SPARK_MASTER_URL=spark://spark-master:7077
+      - SPARK_WORKER_MEMORY=2G
+      - SPARK_WORKER_CORES=2
+      - SPARK_NO_DAEMONIZE=true
+    ports:
+      - "8081:8081" # Spark Worker UI
+    networks:
+      - bigdata-net
+    volumes:
+      - ./src:/opt/spark-apps
+      - ./data:/opt/spark-data
+    tty: true
+    stdin_open: true
+
+  # ============================================
+  # ELASTICSEARCH - Search and analytics engine
+  # ============================================
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.11.0
+    container_name: elasticsearch
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - cluster.name=brand-monitoring
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    networks:
+      - bigdata-net
+    volumes:
+      - elasticsearch-data:/usr/share/elasticsearch/data
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -s http://localhost:9200 | grep -q 'cluster_name'" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  # ============================================
+  # KIBANA - Visualization dashboard
+  # ============================================
+  kibana:
+    image: docker.elastic.co/kibana/kibana:8.11.0
+    container_name: kibana
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+      - XPACK_SECURITY_ENABLED=false
+    ports:
+      - "5601:5601"
+    networks:
+      - bigdata-net
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -s http://localhost:5601/api/status | grep -q 'available'" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+# ============================================
+# NETWORKS
+# ============================================
+networks:
+  bigdata-net:
+    driver: bridge
+
+# ============================================
+# VOLUMES - Persistent storage
+# ============================================
+volumes:
+  zookeeper-data:
+  zookeeper-logs:
+  kafka-data:
+  elasticsearch-data:

@@ -1,0 +1,21 @@
+# Dependencies for the Big Data Brand Monitoring Project
+
+# Twitter API client
+tweepy>=4.14.0
+
+# Kafka Python client
+kafka-python>=2.0.2
+
+# Natural Language Processing
+textblob>=0.17.1
+nltk>=3.8.1
+
+# PySpark (for local development)
+pyspark>=3.5.0
+
+# ElasticSearch client
+elasticsearch>=8.11.0
+
+# Utilities
+python-dotenv>=1.0.0
+requests>=2.31.0
