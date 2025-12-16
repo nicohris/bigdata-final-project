@@ -1,0 +1,160 @@
+[
+    {
+        "tweet_id": "1869712345678901234",
+        "original_text": "Just got my new #TechnoPhone and the battery life is AMAZING! Best purchase ever @TechnoGadget 🔥",
+        "cleaned_text": "just got my new technophone and the battery life is amazing best purchase ever",
+        "sentiment": {
+            "label": "positive",
+            "score": 0.89
+        },
+        "hashtags": [
+            "technophone"
+        ],
+        "mentions": [
+            "technogadget"
+        ],
+        "author": {
+            "id": "9876543210",
+            "username": "sarahtech",
+            "name": "Sarah Tech",
+            "followers_count": 1523
+        },
+        "keywords": [
+            "battery life",
+            "purchase",
+            "amazing"
+        ],
+        "is_complaint": false,
+        "priority": "low",
+        "created_at": "2024-12-15T10:30:00.000Z",
+        "processed_at": "2024-12-15T10:30:01.234Z"
+    },
+    {
+        "tweet_id": "1869712345678901235",
+        "original_text": "@TechnoGadget Your customer service is terrible! Been waiting 2 weeks for my refund. #frustrated #badservice https://t.co/example",
+        "cleaned_text": "your customer service is terrible been waiting 2 weeks for my refund",
+        "sentiment": {
+            "label": "negative",
+            "score": -0.76
+        },
+        "hashtags": [
+            "frustrated",
+            "badservice"
+        ],
+        "mentions": [
+            "technogadget"
+        ],
+        "author": {
+            "id": "1122334455",
+            "username": "mikej_tech",
+            "name": "Mike Johnson",
+            "followers_count": 342
+        },
+        "keywords": [
+            "customer service",
+            "refund",
+            "waiting",
+            "terrible"
+        ],
+        "is_complaint": true,
+        "priority": "high",
+        "created_at": "2024-12-15T14:22:33.000Z",
+        "processed_at": "2024-12-15T14:22:34.127Z"
+    },
+    {
+        "tweet_id": "1869712345678901236",
+        "original_text": "The camera on the #TechnoPhone is honestly meh. Nothing special compared to iPhone. @TechnoGadget needs to step up 📷",
+        "cleaned_text": "the camera on the technophone is honestly meh nothing special compared to iphone needs to step up",
+        "sentiment": {
+            "label": "negative",
+            "score": -0.34
+        },
+        "hashtags": [
+            "technophone"
+        ],
+        "mentions": [
+            "technogadget"
+        ],
+        "author": {
+            "id": "5566778899",
+            "username": "photopro_alex",
+            "name": "PhotoPro Alex",
+            "followers_count": 15234
+        },
+        "keywords": [
+            "camera",
+            "iphone",
+            "comparison"
+        ],
+        "is_complaint": false,
+        "priority": "medium",
+        "created_at": "2024-12-15T11:45:22.000Z",
+        "processed_at": "2024-12-15T11:45:23.456Z"
+    },
+    {
+        "tweet_id": "1869712345678901237",
+        "original_text": "Switched from Samsung to #TechnoPhone - no regrets! The software is so smooth 🚀 #innovation #tech2024",
+        "cleaned_text": "switched from samsung to technophone no regrets the software is so smooth",
+        "sentiment": {
+            "label": "positive",
+            "score": 0.72
+        },
+        "hashtags": [
+            "technophone",
+            "innovation",
+            "tech2024"
+        ],
+        "mentions": [],
+        "author": {
+            "id": "3344556677",
+            "username": "lisareviews",
+            "name": "TechReviewer Lisa",
+            "followers_count": 89234
+        },
+        "keywords": [
+            "samsung",
+            "software",
+            "smooth",
+            "switched"
+        ],
+        "is_complaint": false,
+        "priority": "low",
+        "location": {
+            "lat": 37.7749,
+            "lon": -122.4194
+        },
+        "created_at": "2024-12-15T09:12:05.000Z",
+        "processed_at": "2024-12-15T09:12:06.789Z"
+    },
+    {
+        "tweet_id": "1869712345678901238",
+        "original_text": "Anyone else having issues with #TechnoPhone overheating? Mine gets really hot when gaming 🎮🔥 @TechnoGadget",
+        "cleaned_text": "anyone else having issues with technophone overheating mine gets really hot when gaming",
+        "sentiment": {
+            "label": "negative",
+            "score": -0.45
+        },
+        "hashtags": [
+            "technophone"
+        ],
+        "mentions": [
+            "technogadget"
+        ],
+        "author": {
+            "id": "7788990011",
+            "username": "gamer_dude_99",
+            "name": "GamerDude",
+            "followers_count": 2341
+        },
+        "keywords": [
+            "overheating",
+            "gaming",
+            "issues",
+            "hot"
+        ],
+        "is_complaint": true,
+        "priority": "medium",
+        "created_at": "2024-12-15T16:33:41.000Z",
+        "processed_at": "2024-12-15T16:33:42.012Z"
+    }
+]

@@ -1,0 +1,160 @@
+[
+  {
+    "data": {
+      "id": "1869712345678901234",
+      "text": "Just got my new #TechnoPhone and the battery life is AMAZING! Best purchase ever @TechnoGadget 🔥",
+      "author_id": "9876543210",
+      "created_at": "2024-12-15T10:30:00.000Z",
+      "geo": {
+        "place_id": "01a9a39529b27f36"
+      },
+      "entities": {
+        "hashtags": [
+          {"start": 16, "end": 27, "tag": "TechnoPhone"}
+        ],
+        "mentions": [
+          {"start": 74, "end": 87, "username": "TechnoGadget"}
+        ]
+      }
+    },
+    "includes": {
+      "users": [
+        {
+          "id": "9876543210",
+          "name": "Sarah Tech",
+          "username": "sarahtech",
+          "public_metrics": {
+            "followers_count": 1523,
+            "following_count": 892
+          }
+        }
+      ]
+    }
+  },
+  {
+    "data": {
+      "id": "1869712345678901235",
+      "text": "@TechnoGadget Your customer service is terrible! Been waiting 2 weeks for my refund. #frustrated #badservice https://t.co/example",
+      "author_id": "1122334455",
+      "created_at": "2024-12-15T14:22:33.000Z",
+      "entities": {
+        "hashtags": [
+          {"start": 82, "end": 93, "tag": "frustrated"},
+          {"start": 94, "end": 105, "tag": "badservice"}
+        ],
+        "mentions": [
+          {"start": 0, "end": 13, "username": "TechnoGadget"}
+        ],
+        "urls": [
+          {"start": 106, "end": 129, "url": "https://t.co/example"}
+        ]
+      }
+    },
+    "includes": {
+      "users": [
+        {
+          "id": "1122334455",
+          "name": "Mike Johnson",
+          "username": "mikej_tech",
+          "public_metrics": {
+            "followers_count": 342,
+            "following_count": 567
+          }
+        }
+      ]
+    }
+  },
+  {
+    "data": {
+      "id": "1869712345678901236",
+      "text": "The camera on the #TechnoPhone is honestly meh. Nothing special compared to iPhone. @TechnoGadget needs to step up 📷",
+      "author_id": "5566778899",
+      "created_at": "2024-12-15T11:45:22.000Z",
+      "entities": {
+        "hashtags": [
+          {"start": 18, "end": 29, "tag": "TechnoPhone"}
+        ],
+        "mentions": [
+          {"start": 84, "end": 97, "username": "TechnoGadget"}
+        ]
+      }
+    },
+    "includes": {
+      "users": [
+        {
+          "id": "5566778899",
+          "name": "PhotoPro Alex",
+          "username": "photopro_alex",
+          "public_metrics": {
+            "followers_count": 15234,
+            "following_count": 432
+          }
+        }
+      ]
+    }
+  },
+  {
+    "data": {
+      "id": "1869712345678901237",
+      "text": "Switched from Samsung to #TechnoPhone - no regrets! The software is so smooth 🚀 #innovation #tech2024",
+      "author_id": "3344556677",
+      "created_at": "2024-12-15T09:12:05.000Z",
+      "geo": {
+        "place_id": "07d9db48bc083000",
+        "coordinates": {
+          "type": "Point",
+          "coordinates": [-122.4194, 37.7749]
+        }
+      },
+      "entities": {
+        "hashtags": [
+          {"start": 25, "end": 36, "tag": "TechnoPhone"},
+          {"start": 79, "end": 90, "tag": "innovation"},
+          {"start": 91, "end": 100, "tag": "tech2024"}
+        ]
+      }
+    },
+    "includes": {
+      "users": [
+        {
+          "id": "3344556677",
+          "name": "TechReviewer Lisa",
+          "username": "lisareviews",
+          "public_metrics": {
+            "followers_count": 89234,
+            "following_count": 1203
+          }
+        }
+      ]
+    }
+  },
+  {
+    "data": {
+      "id": "1869712345678901238",
+      "text": "Anyone else having issues with #TechnoPhone overheating? Mine gets really hot when gaming 🎮🔥 @TechnoGadget",
+      "author_id": "7788990011",
+      "created_at": "2024-12-15T16:33:41.000Z",
+      "entities": {
+        "hashtags": [
+          {"start": 31, "end": 42, "tag": "TechnoPhone"}
+        ],
+        "mentions": [
+          {"start": 93, "end": 106, "username": "TechnoGadget"}
+        ]
+      }
+    },
+    "includes": {
+      "users": [
+        {
+          "id": "7788990011",
+          "name": "GamerDude",
+          "username": "gamer_dude_99",
+          "public_metrics": {
+            "followers_count": 2341,
+            "following_count": 876
+          }
+        }
+      ]
+    }
+  }
+]
