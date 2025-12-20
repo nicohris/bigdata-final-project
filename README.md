@@ -20,6 +20,8 @@
 10. [Data Management](#10-data-management)
 11. [Troubleshooting](#11-troubleshooting)
 12. [Screenshots](#12-screenshots)
+13. [Challenges Encountered and Solutions](#13-challenges-encountered-and-solutions)
+14. [My Setup Notes](#14-my-setup-notes)
 
 ---
 
@@ -243,6 +245,59 @@ elasticsearch>=8.11.0   # ElasticSearch client
 python-dotenv>=1.0.0    # Environment variables
 requests>=2.31.0        # HTTP requests
 ```
+
+### Why We Selected These Tools
+
+| Tool | Why We Chose It |
+|------|-----------------|
+| **Apache Kafka** | Industry standard for real-time data streaming. Handles high volume of messages with low latency. Perfect for ingesting thousands of tweets per second. |
+| **ElasticSearch** | Very fast search and aggregation on large datasets. Built-in JSON support makes it perfect for tweet data. Easy to scale horizontally. |
+| **Kibana** | Native integration with ElasticSearch. No code needed to create dashboards. Real-time visualization out of the box. |
+| **Docker** | Easy setup - one command starts everything. Same environment on any machine. No "it works on my computer" problems. |
+| **TextBlob** | Simple Python library for sentiment analysis. No machine learning training needed. Good enough accuracy for demonstration. |
+| **Python** | Easy to read and write. Many libraries for Big Data (kafka-python, elasticsearch, textblob). Fast development. |
+
+### How These Tools Fit in a Big Data Ecosystem
+
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                         BIG DATA ECOSYSTEM                                   │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   DATA SOURCES          INGESTION         PROCESSING         STORAGE        │
+│   ┌──────────┐         ┌─────────┐       ┌─────────┐       ┌─────────┐     │
+│   │ Twitter  │         │  KAFKA  │       │  SPARK  │       │ELASTIC- │     │
+│   │ Facebook │ ──────▶│(message │──────▶│(batch & │──────▶│ SEARCH  │     │
+│   │ Sensors  │         │ queue)  │       │ stream) │       │(search) │     │
+│   │ Logs     │         └─────────┘       └─────────┘       └────┬────┘     │
+│   └──────────┘                                                   │          │
+│                                                                  ▼          │
+│                         VISUALIZATION                        ┌─────────┐   │
+│                         ┌──────────────────────────────────▶│ KIBANA  │   │
+│                         │                                    │(charts) │   │
+│                         │                                    └─────────┘   │
+│                         │                                                   │
+│   OUR PROJECT:          │                                                   │
+│   ┌──────────┐         ┌─────────┐                         ┌─────────┐     │
+│   │  TWEET   │         │  KAFKA  │                         │ELASTIC- │     │
+│   │SIMULATOR │  ──────▶│(buffer) │────────────────────────▶│ SEARCH  │     │
+│   └──────────┘         └─────────┘                         └────┬────┘     │
+│        │                                                         │          │
+│        │              (Sentiment analysis done in simulator)     │          │
+│        └─────────────────────────────────────────────────────────┼─────┐    │
+│                                                                  ▼     ▼    │
+│                                                           ┌─────────────┐   │
+│                                                           │   KIBANA    │   │
+│                                                           │ (dashboard) │   │
+│                                                           └─────────────┘   │
+│                                                                              │
+└─────────────────────────────────────────────────────────────────────────────┘
+```
+
+**Our simplified architecture** shows the same concepts as enterprise Big Data systems:
+- **Kafka** = Message queue for decoupling producers from consumers
+- **ElasticSearch** = NoSQL database optimized for search and analytics
+- **Kibana** = Business Intelligence tool for non-technical users
 
 ---
 
@@ -739,6 +794,220 @@ This chart helps understand overall brand perception quickly.
 ![Priority Chart](screens/priority.png)
 
 **Description**: Chart showing priority distribution (high, medium, low). High priority tweets are usually complaints from customers with many followers, needing fast customer service response.
+
+---
+
+## 13. Challenges Encountered and Solutions
+
+During the development of this project, we faced several technical challenges. Here is how we solved them:
+
+### Challenge 1: ElasticSearch Client Version Compatibility
+
+**Problem**: The Python `elasticsearch` library version 8.x changed its API. The old way of connecting didn't work anymore.
+
+**Error message**:
+```
+TypeError: __init__() got an unexpected keyword argument 'hosts'
+```
+
+**Solution**: Updated the connection code to use the new API:
+```python
+# OLD (doesn't work with ES 8.x)
+es = Elasticsearch(hosts=['localhost:9200'])
+
+# NEW (works with ES 8.x)
+es = Elasticsearch(['http://localhost:9200'])
+```
+
+---
+
+### Challenge 2: Spark Docker Image Not Found
+
+**Problem**: The Spark Docker image we tried to use didn't exist in the registry.
+
+**Error message**:
+```
+manifest for bitnami/spark:3.5.0 not found
+```
+
+**Solution**: Changed the docker-compose.yml to use the correct image tag:
+```yaml
+# OLD (doesn't exist)
+image: bitnami/spark:3.5.0
+
+# NEW (exists and works)
+image: bitnami/spark:3.5
+```
+
+---
+
+### Challenge 3: Data Loss on Restart
+
+**Problem**: Every time we restarted the pipeline with `start_pipeline.bat`, all our tweets were deleted and replaced with sample data.
+
+**Root cause**: The `load_sample_data.py` script was deleting the index every time it ran.
+
+**Solution**: Modified the script to check if data exists before loading:
+```python
+# Check if index exists and has data
+if es.indices.exists(index=INDEX_NAME):
+    count = es.count(index=INDEX_NAME)["count"]
+    if count > 0:
+        print(f"✅ Index already has {count} tweets - keeping existing data")
+        return  # Don't load sample data, preserve existing tweets
+```
+
+---
+
+### Challenge 4: Duplicate Tweet IDs
+
+**Problem**: When running the Tweet Simulator multiple times, new tweets would overwrite old tweets because they had the same IDs.
+
+**Root cause**: Tweet IDs were sequential starting from 0 each time: `tweet_0`, `tweet_1`, `tweet_2`...
+
+**Solution**: Generate truly unique IDs using timestamp + random number:
+```python
+# OLD (causes duplicates)
+tweet_id = f"tweet_{counter}"
+
+# NEW (always unique)
+unique_id = f"{int(time.time() * 1000000)}{random.randint(1000, 9999)}"
+```
+
+---
+
+### Challenge 5: ElasticSearch Takes Long to Start
+
+**Problem**: The script tried to connect to ElasticSearch before it was ready, causing connection errors.
+
+**Solution**: Added a retry loop with timeout:
+```batch
+:wait_es
+echo Waiting for ElasticSearch...
+curl -s http://localhost:9200 > nul 2>&1
+if errorlevel 1 (
+    timeout /t 5 /nobreak > nul
+    goto wait_es
+)
+echo ElasticSearch is ready!
+```
+
+---
+
+## 14. My Setup Notes
+
+This section describes specific problems I struggled with and how I solved them. This is my personal learning experience.
+
+### Problem: Kibana Shows "No Data" Even Though Data Exists
+
+**What happened**: 
+I ran the Tweet Simulator, saw tweets being generated in the terminal, but Kibana Discover page showed "No results found".
+
+**My debugging process**:
+
+1. **First, I checked if data was in ElasticSearch**:
+   ```powershell
+   curl http://localhost:9200/brand_tweets/_count
+   ```
+   Result: `{"count":150}` - Data exists!
+
+2. **Then I checked the time range in Kibana**:
+   The default was "Last 15 minutes", but my tweets had timestamps from yesterday (sample data).
+
+3. **Solution**: Changed the time filter to "Last 7 days" in Kibana.
+
+**Screenshot of the problem**:
+
+The Kibana interface showing the time picker that I needed to change.
+
+**What I learned**: Always check the time range when Kibana shows no data. ElasticSearch stores timestamps, and Kibana filters by time.
+
+---
+
+### Problem: Docker Containers Keep Restarting
+
+**What happened**:
+After running `docker-compose up -d`, the ElasticSearch container kept restarting in a loop.
+
+**My debugging process**:
+
+1. **Checked container logs**:
+   ```powershell
+   docker-compose logs elasticsearch
+   ```
+   
+2. **Found the error**:
+   ```
+   ERROR: max virtual memory areas vm.max_map_count [65530] is too low
+   ```
+
+3. **Solution for Windows with WSL2**:
+   ```powershell
+   wsl -d docker-desktop
+   sysctl -w vm.max_map_count=262144
+   ```
+
+**What I learned**: ElasticSearch needs specific Linux kernel settings. On Windows with Docker Desktop, you need to configure WSL2.
+
+---
+
+### Problem: Understanding How Kibana Visualizations Work
+
+**What I struggled with**:
+I didn't understand how to create a pie chart. The interface was confusing with "metrics" and "buckets".
+
+**What I learned**:
+
+1. **Metrics** = What you want to measure (count, average, sum)
+2. **Buckets** = How you want to group the data (by sentiment, by date, by hashtag)
+
+**Example for sentiment pie chart**:
+- Metric: **Count** (how many tweets)
+- Bucket: **Terms** on field `sentiment_label` (group by positive/negative/neutral)
+
+**My step-by-step process**:
+1. Go to Kibana → Visualize Library → Create visualization
+2. Choose "Pie"
+3. Select `brand_tweets` data view
+4. Add bucket → Split slices → Terms → `sentiment_label`
+5. Click "Update"
+
+---
+
+### Problem: Python Package Conflicts
+
+**What happened**:
+Running `pip install -r requirements.txt` gave errors about incompatible versions.
+
+**Error**:
+```
+ERROR: pip's dependency resolver does not currently take into account all the packages that are installed.
+```
+
+**My solution**:
+1. Created a virtual environment:
+   ```powershell
+   python -m venv venv
+   venv\Scripts\activate
+   ```
+2. Installed packages in the clean environment:
+   ```powershell
+   pip install -r requirements.txt
+   ```
+
+**What I learned**: Always use virtual environments to avoid package conflicts.
+
+---
+
+### Key Takeaways from This Project
+
+1. **Docker makes Big Data easy** - Instead of installing Kafka, ElasticSearch, Kibana manually, one `docker-compose up` command starts everything.
+
+2. **Real-time data is complex** - Many things can go wrong: connection timeouts, data duplication, timestamp issues.
+
+3. **Debugging is important** - Always check logs (`docker-compose logs`), verify data exists (`curl`), and check configurations.
+
+4. **Documentation matters** - Writing this README helped me understand the system better.
 
 ---
 
